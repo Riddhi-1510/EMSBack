@@ -1,8 +1,9 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
-const PORT = process.env.PORT || 8000; // Render sets the PORT environment variable
+// Use environment's PORT or fallback to 10000 (recommended to use platform's port)
+const PORT = process.env.PORT || 10000;
 
 const cors = require('cors');
 const path = require('path');
@@ -33,7 +34,11 @@ app.use("/api", staticRoutes);
 app.use("/api", adminRoutes);
 app.use("/employee/api", employeeRoutes);
 
-// Ensure server listens on all interfaces
-app.listen(PORT, '0.0.0.0', () => {
+// Start server and bind to 0.0.0.0
+const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running at http://0.0.0.0:${PORT}`);
 });
+
+// Timeout settings (if needed)
+server.keepAliveTimeout = 120000; // 120 seconds
+server.headersTimeout = 120000; // 120 seconds
