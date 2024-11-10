@@ -13,19 +13,15 @@
 require('dotenv').config()
 const express = require('express');
 const app = express();
-
 const PORT = 8000 || process.env.PORT
-
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-
 // Connect Mongodb
 require('./connection.js');
-
 const staticRoutes = require('./routes/authRoutes.js')//adding all datas
-const employeeRoutes = require('./routes/employeeRoutes.js')
+// const employeeRoutes = require('./routes/employeeRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js');
 
 const _dirname = path.resolve();
@@ -42,13 +38,8 @@ app.use(cookieParser());
 
 app.use("/api",staticRoutes);
 app.use("/api",adminRoutes)
-app.use("/employee/api",employeeRoutes);
+// app.use("/employee/api",employeeRoutes);
 
-app.use(express.static(path.join(__dirname, '../Frontend/build')));
-console.log(path.join(__dirname, '../Frontend/build'))
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Frontend/build/index.html'));
-});
 
 app.listen(PORT,() => {
     console.log("Server is runing at port: ",PORT)
