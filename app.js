@@ -1,38 +1,26 @@
-// main role is employee,manager,hr,admin
-
-// employee model -> name,pass,mail,role
-// manager model -> name,pass,mail,role
-// hr model -> name,pass,mail,role
-// admin model -> name,pass,mail,role
-
-/*
-  User Information/ Details
-  // We have to make model of this 
-*/
-
 require('dotenv').config()
 const express = require('express');
 const app = express();
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8000; // Render sets the PORT environment variable
 
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-// Connect Mongodb
+// Connect to MongoDB
 require('./connection.js');
 
-const staticRoutes = require('./routes/authRoutes.js')//adding all datas
-const employeeRoutes = require('./routes/employeeroutes.js')
+const staticRoutes = require('./routes/authRoutes.js');
+const employeeRoutes = require('./routes/employeeroutes.js');
 const adminRoutes = require('./routes/adminroutes.js');
 
 const _dirname = path.resolve();
 
 const corsOptions = {
-    origin: 'http://localhost:3000',  
-    credentials: true,  
+    origin: 'http://localhost:3000',  // Change this to your frontend URL if deployed
+    credentials: true,
 };
 
 app.use(express.json());
@@ -40,12 +28,12 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use("/api",staticRoutes);
-app.use("/api",adminRoutes)
-app.use("/employee/api",employeeRoutes);
+// Define routes
+app.use("/api", staticRoutes);
+app.use("/api", adminRoutes);
+app.use("/employee/api", employeeRoutes);
 
-
-
-app.listen(PORT,() => {
-    console.log("Server is runing at port: ",PORT)
-})
+// Ensure server listens on all interfaces
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running at http://0.0.0.0:${PORT}`);
+});
