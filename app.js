@@ -14,7 +14,7 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 
-const PORT = 8000 || process.env.PORT
+const PORT = process.env.PORT || 8000
 
 const cors = require('cors');
 const path = require('path');
