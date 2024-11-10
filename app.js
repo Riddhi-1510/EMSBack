@@ -13,15 +13,19 @@
 require('dotenv').config()
 const express = require('express');
 const app = express();
+
 const PORT = 8000 || process.env.PORT
+
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+
 // Connect Mongodb
 require('./connection.js');
+
 const staticRoutes = require('./routes/authRoutes.js')//adding all datas
-// const employeeRoutes = require('./routes/employeeRoutes.js')
+const employeeRoutes = require('./routes/employeeRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js');
 
 const _dirname = path.resolve();
@@ -38,7 +42,8 @@ app.use(cookieParser());
 
 app.use("/api",staticRoutes);
 app.use("/api",adminRoutes)
-// app.use("/employee/api",employeeRoutes);
+app.use("/employee/api",employeeRoutes);
+
 
 
 app.listen(PORT,() => {
